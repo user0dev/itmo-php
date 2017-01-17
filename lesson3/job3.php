@@ -31,12 +31,9 @@ try {
         $formatedStr = formatDate(new DateTime($inputDate));
     }
 } catch (Exception $e) {
-    $formatedStr = "Не верный формат даты";    
+    $formatedStr = "Неверный формат даты";    
 }
 
-//var_dump(formatDate(new DateTime("12.03.2016 19:50")));
-//var_dump(formatDate(new DateTime("14.01.2017 23:50")));
-//formatDate("12.03.2016 19:50");
 ?>
 <!DOCTYPE html>
 <html lang="ru">

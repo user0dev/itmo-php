@@ -1,6 +1,6 @@
 <?php
 
-const REG_SPACES = "[\s,.’'\"!—]";
+const REG_SPACES = "[\\s,.’'\"!—]";
 
 function isPalindrome($str) {
     $str = (string) $str;
@@ -31,8 +31,8 @@ function isPalindrome($str) {
 
 
 $inputStr = '';
-if (isset($_GET['inputStr']) && !mb_ereg_match('^\s*$', $_GET['inputStr'])) {
-    $inputStr = $_GET['inputStr'];
+if (isset($_GET['inputStr']) && !mb_ereg_match('^\\s*$', $_GET['inputStr'])) {
+    $inputStr = htmlspecialchars($_GET['inputStr']);
 }
 
 ?>
