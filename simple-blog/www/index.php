@@ -1,5 +1,7 @@
+<?php require_once __DIR__ . '/../init.php'; ?>
 
-<?php include __DIR__ . '/../app/views/layout/header.php'; ?>
+
+<?php include ROOT_DIR . '/app/views/layout/header.php'; ?>
 
 <?php foreach ($posts as $post): ?>
     <sections class="post">
@@ -21,4 +23,4 @@
     </sections>        
 <?php endforeach; ?>
 
-<?php include __DIR__ . '/../app/views/layout/footer.php'; ?>
+<?php include  ROOT_DIR . '/app/views/layout/footer.php'; ?>

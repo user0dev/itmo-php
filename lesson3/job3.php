@@ -2,18 +2,30 @@
 <?php
 
 function formatDate(DateTime $date) {
-    //var_dump($date);
+    $locale = 'ru_RU';
     $withouHours = clone $date;
     $withouHours->setTime(0, 0);
     $diff = $withouHours->diff(new DateTime());
-    //var_dump($diff->days);
-    //var_dump($diff);
-    if ($diff->days === 0) {
+    $secondDiff = $date->diff(new DateTime());
+    if ($diff->days === 0 && $secondDiff->invert == 0) {
+        $h = $secondDiff->h;
+        if ($h > 0) {
+            return MessageFormatter::formatMessage($locale, '{0} час{1, choice, 0 #ов| 1 # | 2 #а | 5 #ов}  назад' ,
+                array($h, $h >= 20 ? $h % 10 : $h));
+        } elseif ($secondDiff->i > 0) {
+            $i = $secondDiff->i;
+            return MessageFormatter::formatMessage($locale,
+                '{0} минут{1, choice, 0 #| 1 #а | 2 #ы | 5 #}  назад', array($i, $i < 20 ? $i : $i % 10));
+        } elseif ($secondDiff->s > 0) {
+            $s = $secondDiff->s;
+            return MessageFormatter::formatMessage($locale,
+                '{0} секунд{1, choice, 0 #| 1 #а | 2 #ы | 5 #}  назад', array($s, $s < 20 ? $s : $s % 10));
+        }
         return "сегодня в " . $date->format("H:i");
     } elseif ($diff->days === 1 && $diff->invert == 0) {
         return "вчера в " . $date->format("H:i");
     } else {
-        $dateFormat = new IntlDateFormatter("ru_RU", IntlDateFormatter::LONG, IntlDateFormatter::SHORT,
+        $dateFormat = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::SHORT,
             null, null, "d MMMM y года в HH:mm");
     }
     return $dateFormat->format($date);

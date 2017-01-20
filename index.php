@@ -51,7 +51,7 @@
                     if ($title == 'Document' || $title == '') {
                         $title = $path;
                     }
-                    $jobs[] = new MyJob($value . '/' . $path, $title);
+                    $jobs[] = new MyJob($value . DIRECTORY_SEPARATOR . $path, $title);
                 }
             }
             $lesson->list = $jobs;
@@ -60,7 +60,17 @@
             //var_dump(new MyLesson("Урок " . $matches[1]));
         }
     }
-
+    $testDir = __DIR__ . DIRECTORY_SEPARATOR . 'test';
+    $testList = [];
+    if (is_dir($testDir)) {
+        $testList = scandir($testDir);
+        if ($testList == false) {
+            $testList = [];
+        }
+    }
+    $testList = array_filter($testList, function ($var) {
+        return preg_match('/^[\w\d]+\.php$/i', $var) == 1;
+    });
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -83,7 +93,7 @@
     <ul>
     <?php foreach ($lessons as $lesson): ?>
         <li>
-            <h2>Урок <?= $lesson->number ?></h2>
+            <h2>Урок <?= $lesson->number ?>:</h2>
             <ul>
                 <?php foreach ($lesson->list as $job): ?>
                     <li><a href="<?= $job->path ?>">
@@ -93,6 +103,22 @@
             </ul>
         </li>
     <?php endforeach; ?>
+        <?php if (file_exists(__DIR__ . '/simple-blog/www/index.php')): ?>
+            <li>
+                <h2><a href="http://127.0.0.3">Простой блог</a></h2>
+            </li>
+        <?php endif; ?>
+        <?php if (count($testList)): ?>
+            <li>
+            <h2>Тест:</h2>
+            <ul>
+                <?php foreach($testList as $name): ?>
+                <li><a href="test/<?= $name ?>"><?= $name ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+            </li>
+        <?php endif; ?>
+
     </ul>
 </body>
 </html>
