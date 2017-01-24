@@ -62,30 +62,30 @@ if ($user) {
             <label for="user_name">Имя пользователя:</label>
             <input id="user_name" type="text" name="user[name]" value="<?=$name?>">
             <?php if ($userDouble): ?>
-                <span color="red">Такое имя пользователя уже используется</span>
+                <span style="color: red;">Такое имя пользователя уже используется</span>
             <?php elseif ($user && $name == ''): ?>
-                <span color="red">Не верное имя пользователя</span>
+                <span style="color: red;">Не верное имя пользователя</span>
             <?php endif; ?>
         </div>
         <div>
             <label for="user_mail">Почтовый ящик:</label>
             <input id="user_mail" type="email" name="user[mail]" value="<?=$mail?>">
             <?php if ($user && $mail == ''): ?>
-                <span color="red">Не верный email</span>
+                <span style="color: red;">Не верный email</span>
             <?php endif; ?>
         </div>
         <div>
             <label for="user_password">Пароль:</label>
             <input type="password" name="user[password]" id="user_password" value="<?= $pass1 ?>">
             <?php if ($user && $pass1 == ''): ?>
-                <span color="red">Не верный пароль</span>
+                <span style="color: red;">Не верный пароль</span>
             <?php endif; ?>
         </div>
         <div>
             <label for="user_password2">Повторите пароль:</label>
             <input type="password" name="user[password2]" id="user_password2" value="<?= $pass2 ?>">
             <?php if ($user && $pass2 == ''): ?>
-                <span color="red">Не верный пароль</span>
+                <span style="color: red;">Не верный пароль</span>
             <?php endif; ?>
         </div>
         
