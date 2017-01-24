@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../init.php';
 
-const REG_NAME = '/^[\w][\w\d]*$/i';
+const REG_NAME = '/^[a-z][\w\d]*$/i';
 const REG_PASS = '/^[\d\w.$#@!&?\/\\\^]{6,20}$/i';
-const REG_MAIl = '/^\w[\w\d_-]*\@[\w\d]+\.\w{2,6}$/i';
+const REG_MAIL = '/^[a-z][\w\d_-]*\@[\w\d]+\.\w{2,6}$/i';
 
 $name = '';
 $pass1 = '';
@@ -19,32 +19,33 @@ if ($user) {
     if (preg_match(REG_NAME, $name) != 1) {
         $name = '';
     }
-    $pass1 = trim($_GET['password'] ?? '');
+    $pass1 = trim($user['password'] ?? '');
     if (preg_match(REG_PASS, $pass1) != 1) {
         $pass1 = '';
     }
-    $pass2 = trim($_GET['password2'] ?? '');
+    $pass2 = trim($user['password2'] ?? '');
     if (preg_match(REG_PASS, $pass2) != 1) {
         $pass2 = '';
     }
-    $mail = trim($_GET['mail'] ?? '');
-    if (preg_match(REG_PASS, $mail) != 1) {
+    $mail = trim($user['mail'] ?? '');
+    var_dump($mail);
+    if (preg_match(REG_MAIL, $mail) != 1) {
         $mail = '';
     }
     $errors = [];
     $userDouble = false;
     if ($mail !== '' && $pass2 !== '' && $pass1 !== '' && $name !== '' && $pass1 === $pass2) {
-        if (getUserByName($name) == null) {
+        //if (userGetByName($name) == null) {
             $newUser = [ 'mail' => $mail, 'password' => $pass1, 'name' => $name ];
-            saveUser($newUser, $errors);
+            userSave($newUser, $errors);
             if (!$errors) {
                 // всплывающее сообщение об успехе
                 header('location: index.php');
                 exit;
             }           
-        } else {
-            $userDouble = true;
-        }
+        // } else {
+        //     $userDouble = true;
+        // }
     }
 }
 
@@ -69,21 +70,24 @@ if ($user) {
         </div>
         <div>
             <label for="user_mail">Почтовый ящик:</label>
-            <input id="user_mail" type="email" name="user[mail]" value="<?=$mail?>">
+            <input id="user_mail" type="email" name="user[mail]" value="<?= $mail ?>">
             <?php if ($user && $mail == ''): ?>
                 <span style="color: red;">Не верный email</span>
             <?php endif; ?>
         </div>
         <div>
             <label for="user_password">Пароль:</label>
-            <input type="password" name="user[password]" id="user_password" value="<?= $pass1 ?>">
+            <input type="password" name="user[password]" id="user_password" value="">
             <?php if ($user && $pass1 == ''): ?>
                 <span style="color: red;">Не верный пароль</span>
             <?php endif; ?>
         </div>
+        <?php if ($pass1 != '' && $pass2 != $pass1): ?>
+            <div  style="color: red;">Пароли не совпадают</div>
+        <?php endif; ?>
         <div>
             <label for="user_password2">Повторите пароль:</label>
-            <input type="password" name="user[password2]" id="user_password2" value="<?= $pass2 ?>">
+            <input type="password" name="user[password2]" id="user_password2" value="">
             <?php if ($user && $pass2 == ''): ?>
                 <span style="color: red;">Не верный пароль</span>
             <?php endif; ?>
