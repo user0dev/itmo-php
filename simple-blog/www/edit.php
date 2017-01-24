@@ -1,10 +1,7 @@
 <?php
 require_once __DIR__ . '/../init.php';
-    //var_dump($_POST['post']);
-    //var_dump($_POST);
-//var_dump($_GET);
-//var_dump($_POST);
-$title = '';
+
+/*$title = '';
 $content = '';
 $id = 0;
 $update = false;
@@ -31,30 +28,53 @@ if (isset($_POST['post'])) {
         //$post = $new
         $status = postSave($post);
     }
+}*/
+
+// $data = isset($_POST['post']) ? $_POST['post'] : [];
+$data = $_POST['post'] ?? []; // PHP 7.0
+$error = [];
+$post = [];
+$id = $data['id'] ?? $_GET['id'] ?? null;
+
+if ($id) {
+    $post = postGetById((int) $id);
+    if (!$post) {
+        header('$_SERVER'['SERVER_PROTOCOL'] . ' 404 Not found');
+        exit('Запись не найдена!');
+    }
+}
+
+if ($data) {
+    $msg = 'Запись успешно ' . ($id ? 'обновлена' : 'добавлена');
+    $post = postSave($data, $error);
+    if (!$errors) {
+        // всплывающее сообщение об успехе
+        header('location: edit.php?id=' . $post['id']);
+        exit;
+    }
+    // высплывающее сообщение с ошибками
 }
 
 ?>
 
 <?php include ROOT_DIR . '/app/views/layout/header.php'; ?>
 
-<?php if(!isset($_POST['post'])): ?>
-    <h1><?= $update ? "Обновить" : "Добавить" ?> запись</h1>
-
+<h1>
+    <?= isset($post['id']) ? ' Редактировать запись' : 'Новая запись' ?>
+</h1>
     <form method="post">
         <div>
             <label for="post_title">Заголовок</label>
-            <input type="text" id="post_title" name="post[title]" value="<?= $title ?>">
+            <input type="text" id="post_title" name="post[title]" value="<?= $post['title'] ?? '' ?>">
         </div>
         <div>
             <label for="post_content">Содержимое</label>
-            <textarea id="post_content" name="post[content]"><?= $content ?></textarea>
+            <textarea id="post_content" name="post[content]"><?= $post['content'] ?? '' ?></textarea>
         </div>
+        <?php if (isset($post['id'])): ?>
+            <input type="hidden" name="post[id]" value="<?= $post['id'] ?>">
+        <?php endif; ?>
         <div><input type="submit" value="Отправить"></div>
     </form>
-<?php elseif ($status): ?>
-    <h1>Запись успешно <?= $update ? 'обновлена' : 'добавлена' ?></h1>
-<?php else: ?>
-    <h1>Ошибка <?= $update ? 'обновления' : "добавления" ?> записи</h1>
-<?php endif; ?>
 
 <?php include ROOT_DIR . '/app/views/layout/footer.php'; ?>

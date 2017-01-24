@@ -36,12 +36,7 @@ function storageGetNextId($entity)
 
     $ids = array_map('storageGetIdFromFilename', scandir($dir));
     $ids = array_filter($ids);
-    $id = 0;
-    if (count($ids) > 0) {
-        $id = max($ids);
-    }
-
-    return $id ? $id + 1 : 1;
+    return $ids ? max($ids) + 1 : 1;
 }
 
 
@@ -63,12 +58,13 @@ function storageSaveItem($entity, array &$item)
 {
     $dir = storageGetDir($entity);
     //var_dump($dir, file_exists($dir), dirname($dir), is_writable(dirname($dir)));
+    $success = true;
     if (!file_exists($dir)) {
-        if (!mkdir($dir, 0755, true)) {
-            return false;
-        }
+        $success = mkdir($dir, 0755, true);
     }
-
+    if (!$success) {
+        return false;
+    }
     // доп проверка
 
     $id = $item['id'] ?? 0;

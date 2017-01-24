@@ -17,10 +17,16 @@ function postGetById($id)
     return storageGetItemById(ENTITY_POST, $id);
 }
 
-function postSave(array $post)
+function postSave(array $post, array &$errors = null)
 {
     // очистка и валидация данных
-
-    return storageSaveItem(ENTITY_POST, $post);
-
+    //var_dump($errors);
+    //return;
+    $status = storageSaveItem(ENTITY_POST, $post);
+    //$status = false;
+    if (!$status) {
+        $errors['db'] = 'Не удалось сохранить данные в базу';
+        //var_dump($errors);
+    }
+    return $post;
 }
