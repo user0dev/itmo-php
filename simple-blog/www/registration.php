@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../init.php';
 
+if (isAuthorized) {
+    header('location: index.php');
+}
+
 const REG_NAME = '/^[a-z][\w\d]*$/i';
 const REG_PASS = '/^[\d\w.$#@!&?\/\\\^]{6,20}$/i';
 const REG_MAIL = '/^[a-z][\w\d_-]*\@[\w\d]+\.\w{2,6}$/i';
@@ -13,7 +17,7 @@ $userDouble = false;
 
 
 $user = $_POST['user'] ?? [];
-var_dump($user);
+//var_dump($user);
 if ($user) {
     $name = trim($user['name'] ?? '');
     if (preg_match(REG_NAME, $name) != 1) {
@@ -36,7 +40,7 @@ if ($user) {
     $userDouble = false;
     if ($mail !== '' && $pass2 !== '' && $pass1 !== '' && $name !== '' && $pass1 === $pass2) {
         //if (userGetByName($name) == null) {
-            $newUser = [ 'mail' => $mail, 'password' => $pass1, 'name' => $name ];
+            $newUser = [ 'mail' => $mail, 'password' => password_hash($pass1, PASSWORD_DEFAULT), 'username' => $name ];
             userSave($newUser, $errors);
             if (!$errors) {
                 // всплывающее сообщение об успехе

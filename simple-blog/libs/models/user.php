@@ -14,8 +14,11 @@ function userGetById($id)
     return storageGetItemById(ENTITY_USER, $id);
 }
 
-function userGetByName($name) {
-    return null;
+
+
+function userGetBy($attribute, $criteria)
+{
+    return storageGetItemBy(ENTITY_USER, $attribute, $criteria);
 }
 
 function userSave(array $user, array &$errors = null)

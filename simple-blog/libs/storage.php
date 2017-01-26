@@ -51,7 +51,43 @@ function storageGetItemById($entity, $id)
 
 function storageGetAll($entity)
 {
+    $items = [];
+    $files = scandir(storageGetDir($entity));
+    //var_dump($files);
+    foreach ($files as $filename) {
+        $id = storageGetIdFromFilename($filename);
+        $item = storageGetItemById($entity, $id);
+        //var_dump($item);
+        if ($item) {
+            $items[] = $item;
+        }
+    }
+    //var_dump('$items ',$items);
+    return $items;
+}
 
+function storageGetItemBy($entity, $attribute, $criteria)
+{
+//    array_filter(storageGetAll($entity), function ($item) {
+//        if (isset($item[$attribute])) {
+//
+//        }
+//    });
+
+    $items = [];
+    $storedItems = storageGetAll($entity);
+    // var_dump($storedItems);
+    foreach ($storedItems as $storedItem) {
+        var_dump($storedItem[$attribute], $criteria);
+        if (
+            isset($storedItem[$attribute]) &&
+            $storedItem[$attribute] == $criteria
+        ) {
+            $items[] = $storedItem;
+        }
+    }
+    //var_dump($entity, $attribute, $criteria, $items);
+    return $items;
 }
 
 function storageSaveItem($entity, array &$item)

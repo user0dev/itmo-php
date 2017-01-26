@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . '/../init.php';
 
+if (!isAuthorized()) {
+    header('location: login.php');
+    exit;
+}
+
 /*$title = '';
 $content = '';
 $id = 0;

@@ -3,7 +3,7 @@
 
 <?php include ROOT_DIR . '/app/views/layout/header.php'; ?>
 
-<?php foreach ($posts as $post): ?>
+<?php $posts = []; foreach ($posts as $post): ?>
     <sections class="post">
         <header>
             <h2>
