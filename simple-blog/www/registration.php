@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/../init.php';
 
-if (isAuthorized) {
+if (isAuthorized()) {
     header('location: index.php');
+    exit();
 }
 
 const REG_NAME = '/^[a-z][\w\d]*$/i';
