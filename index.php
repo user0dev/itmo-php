@@ -105,7 +105,7 @@
     <?php endforeach; ?>
         <?php if (file_exists(__DIR__ . '/simple-blog/www/index.php')): ?>
             <li>
-                <h2><a href="http://127.0.0.3">Простой блог</a></h2>
+                <h2><a href="http://127.0.0.3:<?= $_SERVER["SERVER_PORT"] ?>">Простой блог</a></h2>
             </li>
         <?php endif; ?>
         <?php if (count($testList)): ?>
