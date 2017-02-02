@@ -22,6 +22,7 @@ function postSave(array $post, array &$errors = null)
     // очистка и валидация данных
     //var_dump($errors);
     //return;
+    $post = sanitize($post, postSanitizeRules(), $errors);
     $status = storageSaveItem(ENTITY_POST, $post);
     //$status = false;
     if (!$status) {
@@ -29,4 +30,23 @@ function postSave(array $post, array &$errors = null)
         //var_dump($errors);
     }
     return $post;
+}
+
+function postSanitizeRules() {
+    return [
+        'id' => [
+            'filter' => FILTER_VALIADTE_INT,
+            'options' => [
+                'min_range' => 1,
+            ]
+        ],
+        'title' => [
+            'required' => true,
+            'filter' => FILTER_SANITIZE_SPECIAL_CHARS,
+        ],
+        'content' => [
+            'required' => true,
+            'filter' => FILTER_SANITIZE_SPECIAL_CHARS,
+        ],
+    ];
 }

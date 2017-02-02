@@ -1,9 +1,14 @@
-<?php require_once __DIR__ . '/../init.php'; ?>
+<?php 
+
+require_once __DIR__ . '/../init.php'; 
+$posts = postGetAll();
+
+?>
 
 
 <?php include ROOT_DIR . '/app/views/layout/header.php'; ?>
 
-<?php $posts = []; foreach ($posts as $post): ?>
+<?php foreach ($posts as $post): ?>
     <sections class="post">
         <header>
             <h2>

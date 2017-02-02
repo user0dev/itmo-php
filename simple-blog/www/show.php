@@ -4,7 +4,8 @@ require_once __DIR__ . '/../init.php';
 
 /**/
 
-$post = $posts[$_GET['id']-1] ?? null;
+//$post = $posts[$_GET['id']-1] ?? null;
+$post = postGetById($_GEt['id' ?? null]);
 
 if (!$post) {
     header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not found');
