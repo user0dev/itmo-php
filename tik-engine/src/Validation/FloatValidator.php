@@ -6,12 +6,15 @@
  * and open the template in the editor.
  */
 
-/**
- * Description of FloatValidator
- *
- * @author user
- */
-class FloatValidator
+class FloatValidator extends Validator
 {
-    //put your code here
+    public function filter($value)
+    {
+        return $this->filterVar($value, FILTER_SANITIZE_NUMBER_FLOAT);
+    }
+
+    public function validate($value)
+    {
+        return $this->filterVar($value, FILTER_VALIDATE_FLOAT);
+    }
 }

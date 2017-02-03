@@ -11,7 +11,18 @@
  *
  * @author user
  */
-class RawValidator
+class RawValidator extends Validator
 {
     //put your code here
+    
+    public function filter($value)
+    {
+        return $this->filterVar($value, FILTER_UNSAFE_RAW);
+    }
+
+    public function validate($value)
+    {
+        return $this->filterVar($value, FILTER_UNSAFE_RAW);
+    }
+    
 }
