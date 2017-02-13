@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
     <title>{{ title }}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="css/style.css">
+    <!--<style>-->
+        <!--[class*="col-"] {-->
+            <!--background-color: #eee;-->
+            <!--text-align: center;-->
+            <!--padding-top: 10px;-->
+            <!--padding-bottom: 10px;-->
+            <!--margin-bottom: 10px;-->
+            <!--font-size: 2rem;-->
+        <!--}-->
+    <!--</style>-->
 </head>
 <body>
-    {{ text }}
+{% include 'header.twig.html' %}
+
+{% include 'footer.twig.html' %}
 </body>
 </html>
