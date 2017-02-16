@@ -13,5 +13,6 @@ $twig = new Twig_Environment($loader, array('cache' => __DIR__ . '/cache', 'debu
 
 $dsn = "mysql:host=localhost;dbname=twigtemplate;";
 
-$pdo = new PDO($dsn, "root", "1122334455");
+$pdo = new PDO($dsn, "root", "1122334455", [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
 
